@@ -1,4 +1,4 @@
-package taobits.net.kotlinforandroiddevelopers;
+package net.taobits.kotlinforandroiddevelopers;
 
 import org.junit.Test;
 
@@ -11,5 +11,10 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
+    }
+
+    @Test
+    public void request() {
+        new WeatherRequest().run();
     }
 }

@@ -6,10 +6,14 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.RecyclerView.Adapter
 import android.support.v7.widget.RecyclerView.ViewHolder
 import android.os.Bundle
+import android.util.Log
 import android.view.ViewGroup
 import android.widget.TextView
 
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.longToast
+import org.jetbrains.anko.uiThread
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,8 +21,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        Log.d(javaClass.simpleName, "Init layout")
         forecastList.layoutManager = LinearLayoutManager(this)
         forecastList.adapter = ForecastListAdapter(items)
+
+        Log.d(javaClass.simpleName, "starting async")
+        doAsync {
+            Log.d(javaClass.simpleName, "Starting request")
+            WeatherRequest().run()
+            Log.d(javaClass.simpleName, "Starting toast on ui thread")
+            uiThread { longToast("Request performed") }
+        }
     }
 }
 
