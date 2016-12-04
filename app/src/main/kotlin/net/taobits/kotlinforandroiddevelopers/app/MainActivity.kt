@@ -12,7 +12,6 @@ import android.widget.TextView
 
 import kotlinx.android.synthetic.main.activity_main.*
 import net.taobits.kotlinforandroiddevelopers.R
-import net.taobits.kotlinforandroiddevelopers.WeatherRequest
 import net.taobits.kotlinforandroiddevelopers.model.ForecastList
 import net.taobits.kotlinforandroiddevelopers.model.RequestForecastCommand
 import org.jetbrains.anko.doAsync
@@ -54,13 +53,3 @@ class ForecastListAdapter(val weekForecast: ForecastList) : Adapter<ForecastList
 
     class ViewHolder(val textView: TextView) : RecyclerView.ViewHolder(textView)
 }
-
-private val items = listOf(
-    "Mon 6/23 - Sunny - 31/17",
-    "Tue 6/24 - Foggy - 21/8",
-    "Wed 6/25 - Cloudy - 22/17",
-    "Thurs 6/26 - Rainy - 18/11",
-    "Fri 6/27 - Foggy - 21/10",
-    "Sat 6/28 - TRAPPED IN WEATHERSTATION - 23/17",
-    "Sun 6/29 - Sunny - 20/7"
-)
