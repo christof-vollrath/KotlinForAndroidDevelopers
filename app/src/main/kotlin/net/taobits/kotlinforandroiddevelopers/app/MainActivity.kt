@@ -1,4 +1,4 @@
-package net.taobits.kotlinforandroiddevelopers
+package net.taobits.kotlinforandroiddevelopers.app
 
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -11,6 +11,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 
 import kotlinx.android.synthetic.main.activity_main.*
+import net.taobits.kotlinforandroiddevelopers.R
+import net.taobits.kotlinforandroiddevelopers.WeatherRequest
+import net.taobits.kotlinforandroiddevelopers.model.ForecastList
+import net.taobits.kotlinforandroiddevelopers.model.RequestForecastCommand
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.uiThread
@@ -23,29 +27,30 @@ class MainActivity : AppCompatActivity() {
 
         Log.d(javaClass.simpleName, "Init layout")
         forecastList.layoutManager = LinearLayoutManager(this)
-        forecastList.adapter = ForecastListAdapter(items)
 
         Log.d(javaClass.simpleName, "starting async")
         doAsync {
-            Log.d(javaClass.simpleName, "Starting request")
-            WeatherRequest().run()
-            Log.d(javaClass.simpleName, "Starting toast on ui thread")
-            uiThread { longToast("Request performed") }
+            val weekForecast = RequestForecastCommand("94043").execute()
+            uiThread {
+                forecastList.adapter = ForecastListAdapter(weekForecast)
+                longToast("Request performed") }
         }
     }
 }
 
-class ForecastListAdapter(val items: List<String>) : RecyclerView.Adapter<ForecastListAdapter.ViewHolder>() {
+class ForecastListAdapter(val weekForecast: ForecastList) : Adapter<ForecastListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(TextView(parent.context))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.textView.text = items[position]
+        with (weekForecast.dailyForecast[position]) {
+            holder.textView.text = "$date - $description - $high/$low"
+        }
     }
 
-    override fun getItemCount(): Int = items.size
+    override fun getItemCount(): Int = weekForecast.dailyForecast.size
 
     class ViewHolder(val textView: TextView) : RecyclerView.ViewHolder(textView)
 }
