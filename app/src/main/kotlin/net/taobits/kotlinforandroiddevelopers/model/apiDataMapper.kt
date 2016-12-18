@@ -1,5 +1,6 @@
 package net.taobits.kotlinforandroiddevelopers.model
 
+import net.taobits.kotlinforandroiddevelopers.weatherclient.ForecastRequest
 import java.text.DateFormat
 import java.util.*
 import net.taobits.kotlinforandroiddevelopers.weatherclient.Forecast as ApiForecast
@@ -15,7 +16,7 @@ object apiDataMapper {
 
     fun convertForecast(forecast: ApiForecast): Forecast =
         Forecast(convertDate(forecast.dt), forecast.weather[0].description,
-            forecast.temp.max.toInt(), forecast.temp.min.toInt())
+            forecast.temp.max.toInt(), forecast.temp.min.toInt(), ForecastRequest.generateIconUrl(forecast.weather[0].icon))
 
     fun convertDate(date: Long): String {
         val df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.US)
