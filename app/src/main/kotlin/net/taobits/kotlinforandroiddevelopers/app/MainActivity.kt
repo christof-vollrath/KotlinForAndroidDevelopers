@@ -1,17 +1,18 @@
 package net.taobits.kotlinforandroiddevelopers.app
 
+import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.RecyclerView.Adapter
-import android.support.v7.widget.RecyclerView.ViewHolder
-import android.os.Bundle
-import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.item_forecast.view.*
 import net.taobits.kotlinforandroiddevelopers.R
+import net.taobits.kotlinforandroiddevelopers.model.Forecast
 import net.taobits.kotlinforandroiddevelopers.model.ForecastList
 import net.taobits.kotlinforandroiddevelopers.model.RequestForecastCommand
 import org.jetbrains.anko.doAsync
@@ -24,32 +25,41 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Log.d(javaClass.simpleName, "Init layout")
         forecastList.layoutManager = LinearLayoutManager(this)
 
-        Log.d(javaClass.simpleName, "starting async")
         doAsync {
             val weekForecast = RequestForecastCommand("94043").execute()
             uiThread {
+                longToast("Weather data received")
                 forecastList.adapter = ForecastListAdapter(weekForecast)
-                longToast("Request performed") }
+            }
         }
     }
 }
 
-class ForecastListAdapter(val weekForecast: ForecastList) : Adapter<ForecastListAdapter.ViewHolder>() {
+class ForecastListAdapter(val weekForecast: ForecastList) : Adapter<ForeccastViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(TextView(parent.context))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ForeccastViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_forecast, parent, false)
+        return ForeccastViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        with (weekForecast.dailyForecast[position]) {
-            holder.textView.text = "$date - $description - $high/$low"
-        }
+    override fun onBindViewHolder(holder: ForeccastViewHolder, position: Int) {
+        holder.bindForecast(weekForecast.dailyForecast[position])
     }
 
     override fun getItemCount(): Int = weekForecast.dailyForecast.size
-
-    class ViewHolder(val textView: TextView) : RecyclerView.ViewHolder(textView)
 }
+
+class ForeccastViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    fun bindForecast(forecast: Forecast) {
+        with(forecast) {
+            Picasso.with(itemView.context).load(iconUrl).into(view.icon)
+            view.date.text = date
+            view.description.text = description
+            view.maxTemperature.text = "${high.toString()}"
+            view.minTemperature.text = "${low.toString()}"
+        }
+    }
+}
+
