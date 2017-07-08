@@ -15,6 +15,6 @@ public class ExampleUnitTest {
 
     @Test
     public void request() {
-        new WeatherRequest().run();
+//        new WeatherRequest().run();
     }
 }
