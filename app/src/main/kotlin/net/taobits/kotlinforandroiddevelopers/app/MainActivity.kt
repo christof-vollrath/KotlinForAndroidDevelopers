@@ -32,19 +32,13 @@ class MainActivity : AppCompatActivity() {
             val weekForecast = RequestForecastCommand("94043").execute()
             uiThread {
                 longToast("Weather data received")
-                forecastList.adapter = ForecastListAdapter(weekForecast,
-                            object : ForecastListAdapter.OnItemClickListener {
-                                override fun invoke(forecast: Forecast) {
-                                    toast(forecast.date)
-                                }
-                            }
-                        )
+                forecastList.adapter = ForecastListAdapter(weekForecast) { forecast -> toast(forecast.date) }
             }
         }
     }
 }
 
-class ForecastListAdapter(val weekForecast: ForecastList, val itemClick: OnItemClickListener) : Adapter<ForeccastViewHolder>() {
+class ForecastListAdapter(val weekForecast: ForecastList, val itemClick: (Forecast) -> Unit) : Adapter<ForeccastViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ForeccastViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_forecast, parent, false)
@@ -56,11 +50,9 @@ class ForecastListAdapter(val weekForecast: ForecastList, val itemClick: OnItemC
     }
 
     override fun getItemCount(): Int = weekForecast.dailyForecast.size
-
-    interface OnItemClickListener { operator fun invoke(forecast: Forecast) }
 }
 
-class ForeccastViewHolder(val view: View, val itemClick: ForecastListAdapter.OnItemClickListener) : RecyclerView.ViewHolder(view) {
+class ForeccastViewHolder(val view: View, val itemClick:  (Forecast) -> Unit) : RecyclerView.ViewHolder(view) {
     fun bindForecast(forecast: Forecast) {
         with(forecast) {
             Picasso.with(itemView.context).load(iconUrl).into(view.icon)
