@@ -38,28 +38,28 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-class ForecastListAdapter(val weekForecast: ForecastList, val itemClick: (Forecast) -> Unit) : Adapter<ForeccastViewHolder>() {
+class ForecastListAdapter(val weekForecast: ForecastList, val itemClick: (Forecast) -> Unit) : Adapter<ForecastViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ForeccastViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ForecastViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_forecast, parent, false)
-        return ForeccastViewHolder(view, itemClick)
+        return ForecastViewHolder(view, itemClick)
     }
 
-    override fun onBindViewHolder(holder: ForeccastViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ForecastViewHolder, position: Int) {
         holder.bindForecast(weekForecast.dailyForecast[position])
     }
 
     override fun getItemCount(): Int = weekForecast.dailyForecast.size
 }
 
-class ForeccastViewHolder(val view: View, val itemClick:  (Forecast) -> Unit) : RecyclerView.ViewHolder(view) {
+class ForecastViewHolder(val view: View, val itemClick:  (Forecast) -> Unit) : RecyclerView.ViewHolder(view) {
     fun bindForecast(forecast: Forecast) {
         with(forecast) {
             Picasso.with(itemView.context).load(iconUrl).into(view.icon)
             view.date.text = date
             view.description.text = description
-            view.maxTemperature.text = "${high.toString()}"
-            view.minTemperature.text = "${low.toString()}"
+            view.maxTemperature.text = "$high"
+            view.minTemperature.text = "$low"
             view.setOnClickListener { (itemClick(this)) }
         }
     }
