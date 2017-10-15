@@ -6,7 +6,7 @@ import java.util.*
 import net.taobits.kotlinforandroiddevelopers.weatherclient.Forecast as ApiForecast
 import net.taobits.kotlinforandroiddevelopers.weatherclient.ForecastResult as ApiForecastResult
 
-object apiDataMapper {
+object ApiDataMapper {
 
     fun convert(forecast: ApiForecastResult): ForecastList =
         ForecastList(forecast.city.name, forecast.city.country, convertForecastList(forecast.list))

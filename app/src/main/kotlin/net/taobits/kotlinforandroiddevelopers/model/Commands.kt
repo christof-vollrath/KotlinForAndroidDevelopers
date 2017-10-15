@@ -10,6 +10,6 @@ class RequestForecastCommand(val zipCode: String): Command<ForecastList>() {
     override fun execute(): ForecastList {
         val forecastRequest = ForecastRequest(zipCode)
         val forecastResult = forecastRequest.execute()
-        return apiDataMapper.convert(forecastResult)
+        return ApiDataMapper.convert(forecastResult)
     }
 }
