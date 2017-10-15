@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
             val weekForecast = RequestForecastCommand("94043").execute()
             uiThread {
                 longToast("Weather data received")
-                forecastList.adapter = ForecastListAdapter(weekForecast) { forecast -> toast(forecast.date) }
+                forecastList.adapter = ForecastListAdapter(weekForecast) { toast(it.date) }
             }
         }
     }
