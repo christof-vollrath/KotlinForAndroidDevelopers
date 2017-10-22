@@ -11,14 +11,10 @@ class App : Application() {
             private set
     }
 
-    val database: SQLiteOpenHelper by lazy {
-        ForecastDbHelper()
-    }
-
     override fun onCreate() {
         super.onCreate()
         instance = this
-        database.writableDatabase
+        ForecastDbHelper.instance.writableDatabase
     }
 
 }
