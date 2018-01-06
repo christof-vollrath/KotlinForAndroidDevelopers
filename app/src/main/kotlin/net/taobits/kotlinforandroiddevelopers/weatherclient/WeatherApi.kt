@@ -13,7 +13,7 @@ data class Forecast(val dt: Long, val temp: Temperature, val pressure: Float, va
                     val speed: Float, val deg: Int, val clouds: Int, val rain: Float)
 data class ForecastResult(val city: City, val list: List<Forecast>)
 
-class ForecastRequest(val zipCode: String) {
+class ForecastRequest(val zipCode: Long) {
     companion object {
         private val APP_ID = "15646a06818f61f7b8d7823ca833e1ce"
         private val HTTP_HOST = "http://api.openweathermap.org"
