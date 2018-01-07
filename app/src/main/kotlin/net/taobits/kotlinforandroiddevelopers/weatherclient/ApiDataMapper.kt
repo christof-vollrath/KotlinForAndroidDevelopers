@@ -14,6 +14,6 @@ object ApiDataMapper {
         list.map { convertForecast(it) }
 
     fun convertForecast(forecast: ApiForecast): Forecast =
-            Forecast(forecast.dt, forecast.weather[0].description,
+            Forecast(0, forecast.dt, forecast.weather[0].description,
                     forecast.temp.max.toInt(), forecast.temp.min.toInt(), ForecastRequest.generateIconUrl(forecast.weather[0].icon))
 }

@@ -18,6 +18,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="net.taobits.kotlinforandroiddevelopers.app.DetailActivity"
+            android:parentActivityName="net.taobits.kotlinforandroiddevelopers.app.MainActivity">
+        </activity>
     </application>
 
 </manifest>

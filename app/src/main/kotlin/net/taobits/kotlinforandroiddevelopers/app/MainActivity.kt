@@ -1,5 +1,6 @@
 package net.taobits.kotlinforandroiddevelopers.app
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -19,6 +20,7 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
+import org.jetbrains.anko.startActivity
 import java.text.DateFormat
 import java.util.*
 
@@ -34,7 +36,9 @@ class MainActivity : AppCompatActivity() {
             val weekForecast = RequestForecastCommand(94043).execute()
             uiThread {
                 longToast("Weather data received")
-                forecastList.adapter = ForecastListAdapter(weekForecast) { toast(convertDate(it.date)) }
+                forecastList.adapter = ForecastListAdapter(weekForecast) {
+                    startActivity<DetailActivity>(DetailActivity.ID to it.id, DetailActivity.CITY_NAME to weekForecast.city)
+                }
             }
         }
     }
