@@ -24,7 +24,7 @@ class ForecastProvider(val sources: List<ForecastDataSource> = ForecastProvider.
 
     fun requestSource(source: ForecastDataSource, days: Int, zipCode: Long): ForecastList? {
         val res = source.requestForecastByZipCode(zipCode, todayTimeSpan())
-        return if (res != null && res.size() >= days) res else null
+        return if (res != null && res.size() >= days - 1) res else null // -1 because sometime the forecast from the server starts with yesterday
     }
 
     fun <T: Any> requestToSources(f: (ForecastDataSource) -> T?): T = sources.firstResult { f(it) }

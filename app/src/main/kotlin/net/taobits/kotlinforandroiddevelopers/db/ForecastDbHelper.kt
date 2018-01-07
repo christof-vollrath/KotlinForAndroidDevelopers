@@ -2,7 +2,7 @@ package net.taobits.kotlinforandroiddevelopers.db
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import net.taobits.kotlinforandroiddevelopers.app.App
+import net.taobits.kotlinforandroiddevelopers.ui.App
 import org.jetbrains.anko.db.*
 
 class ForecastDbHelper(ctx: Context = App.instance) : ManagedSQLiteOpenHelper(ctx, ForecastDbHelper.DB_NAME, null, ForecastDbHelper.DB_VERSION) {

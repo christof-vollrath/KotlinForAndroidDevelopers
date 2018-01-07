@@ -1,7 +1,6 @@
-package net.taobits.kotlinforandroiddevelopers.app
+package net.taobits.kotlinforandroiddevelopers.ui
 
 import android.app.Application
-import android.database.sqlite.SQLiteOpenHelper
 import net.taobits.kotlinforandroiddevelopers.db.ForecastDbHelper
 
 class App : Application() {

@@ -1,11 +1,11 @@
-package net.taobits.kotlinforandroiddevelopers.app
+package net.taobits.kotlinforandroiddevelopers.ui
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.RecyclerView.Adapter
+import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,21 +16,19 @@ import net.taobits.kotlinforandroiddevelopers.R
 import net.taobits.kotlinforandroiddevelopers.model.Forecast
 import net.taobits.kotlinforandroiddevelopers.model.ForecastList
 import net.taobits.kotlinforandroiddevelopers.model.RequestForecastCommand
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.longToast
-import org.jetbrains.anko.toast
-import org.jetbrains.anko.uiThread
-import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.*
 import java.text.DateFormat
 import java.util.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ToolbarManager {
+    override val toolbar: Toolbar by lazy { find<Toolbar>(R.id.toolbar) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         forecastList.layoutManager = LinearLayoutManager(this)
+        attachToScroll(forecastList)
 
         doAsync {
             val weekForecast = RequestForecastCommand(94043).execute()
@@ -39,6 +37,7 @@ class MainActivity : AppCompatActivity() {
                 forecastList.adapter = ForecastListAdapter(weekForecast) {
                     startActivity<DetailActivity>(DetailActivity.ID to it.id, DetailActivity.CITY_NAME to weekForecast.city)
                 }
+                toolbarTitle = "${weekForecast.city} (${weekForecast.country})"
             }
         }
     }
