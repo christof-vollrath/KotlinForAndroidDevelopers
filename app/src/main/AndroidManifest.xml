@@ -21,6 +21,8 @@
         <activity android:name="net.taobits.kotlinforandroiddevelopers.ui.DetailActivity"
             android:parentActivityName="net.taobits.kotlinforandroiddevelopers.ui.MainActivity">
         </activity>
+        <activity android:name=".ui.SettingsActivity"
+            android:label="@string/settings" />
     </application>
 
 </manifest>

@@ -25,6 +25,7 @@ class DetailActivity : AppCompatActivity(), ToolbarManager {
         val ID = "DetailActivity:id"
         val CITY_NAME = "DetailAcitivity:cityName"
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)

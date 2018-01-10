@@ -23,15 +23,27 @@ import java.util.*
 class MainActivity : AppCompatActivity(), ToolbarManager {
     override val toolbar: Toolbar by lazy { find<Toolbar>(R.id.toolbar) }
 
+    val zipCode: Long by LongPreference(this, SettingsActivity.ZIP_CODE, SettingsActivity.DEFAULT_ZIP)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        initToolbar()
 
         forecastList.layoutManager = LinearLayoutManager(this)
         attachToScroll(forecastList)
 
+        loadForecast()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadForecast()
+    }
+
+    fun loadForecast() {
         doAsync {
-            val weekForecast = RequestForecastCommand(94043).execute()
+            val weekForecast = RequestForecastCommand(zipCode).execute()
             uiThread {
                 longToast("Weather data received")
                 forecastList.adapter = ForecastListAdapter(weekForecast) {

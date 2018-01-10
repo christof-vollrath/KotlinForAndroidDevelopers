@@ -4,8 +4,8 @@ import android.support.v7.graphics.drawable.DrawerArrowDrawable
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import net.taobits.kotlinforandroiddevelopers.R
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
-import org.jetbrains.anko.ctx
 
 
 interface ToolbarManager {
@@ -21,7 +21,7 @@ interface ToolbarManager {
         toolbar.inflateMenu(R.menu.menu_main)
         toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
-                R.id.action_settings -> App.instance.toast("Settings")
+                R.id.action_settings -> toolbar.context.startActivity<SettingsActivity>()
                 else -> App.instance.toast("Unkown option")
             }
             true
