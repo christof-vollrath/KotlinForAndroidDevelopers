@@ -23,7 +23,7 @@ import java.util.*
 class MainActivity : AppCompatActivity(), ToolbarManager {
     override val toolbar: Toolbar by lazy { find<Toolbar>(R.id.toolbar) }
 
-    val zipCode: Long by LongPreference(this, SettingsActivity.ZIP_CODE, SettingsActivity.DEFAULT_ZIP)
+    val zipCode: Long by Preference<Long>(this, SettingsActivity.ZIP_CODE, SettingsActivity.DEFAULT_ZIP)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
