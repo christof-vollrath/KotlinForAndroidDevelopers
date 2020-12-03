@@ -16,7 +16,7 @@ data class ForecastResult(val city: City, val list: List<Forecast>)
 class ForecastRequest(val zipCode: Long) {
     companion object {
         private val APP_ID = "15646a06818f61f7b8d7823ca833e1ce"
-        private val HTTP_HOST = "http://api.openweathermap.org"
+        private val HTTP_HOST = "https://api.openweathermap.org"
         private val URL = "$HTTP_HOST/data/2.5/forecast/daily?mode=json&units=metric&cnt=7"
         private val COMPLETE_URL = "$URL&APPID=$APP_ID&q="
 
@@ -24,7 +24,8 @@ class ForecastRequest(val zipCode: Long) {
     }
 
     fun execute(): ForecastResult {
-        val forecastJsonStr = URL(COMPLETE_URL + zipCode).readText()
+        val requestUrl = COMPLETE_URL + zipCode
+        val forecastJsonStr = URL(requestUrl).readText()
         return Gson().fromJson(forecastJsonStr, ForecastResult::class.java)
     }
 
