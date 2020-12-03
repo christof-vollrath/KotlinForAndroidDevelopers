@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/KotlinForAndroidDevelopers.iml" filepath="$PROJECT_DIR$/KotlinForAndroidDevelopers.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/KotlinForAndroidDevelopers.iml" filepath="$PROJECT_DIR$/.idea/KotlinForAndroidDevelopers.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/KotlinForAndroidDevelopers.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/KotlinForAndroidDevelopers.app.iml" />
     </modules>
   </component>
 </project>
